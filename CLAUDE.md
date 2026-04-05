@@ -50,7 +50,27 @@ geo-optimizer/
 └── CLAUDE.md
 ```
 
+## Где смотреть
+- Все ключи и credentials: `backend/.env` (не в git)
+- Шаблон переменных: `backend/.env.example`
+- ЦА и дистрибуция: `docs/target-audience/`
+- Скиллы (deploy, db, etc.): `.claude/skills/`
+
+## Сервисы и доступы
+| Сервис | Описание |
+|--------|----------|
+| AWS EC2 | 98.89.42.222, ubuntu, ключ `causa.pem` в coffee-shop-platform |
+| Neon | Serverless Postgres, eu-central-1 |
+| Cloudflare R2 | Bucket `causabi` |
+| Gemini | 3.0 Flash, `GOOGLE_API_KEY` |
+| AWS Bedrock | `AWS_BEDROCK_API_KEY` |
+| PropelAuth | Auth, новый env под ai.causabi.com |
+| PostHog | Аналитика, project 144288 |
+| Vercel | Фронт (Next.js) |
+| GitHub | https://github.com/SHADRINMMM/geo-optimizer |
+
 ## Важные правила
 - Credentials никогда не коммитить в git
 - Все секреты только в .env файлах
-- R2 credentials уже были показаны в открытом канале — нужно ротировать ключи
+- Для деплоя использовать skill: `/deploy-backend`
+- Для работы с БД использовать skill: `/db`
