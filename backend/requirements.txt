@@ -28,7 +28,7 @@ boto3==1.35.86
 botocore==1.35.86
 
 # Auth
-propelauth-fastapi==2.3.0
+propelauth-fastapi==4.3.2
 
 # Config
 pydantic-settings==2.7.0

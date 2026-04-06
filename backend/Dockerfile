@@ -15,8 +15,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Playwright browsers
-RUN playwright install chromium --with-deps
+# Install Playwright browsers (skip fonts that don't exist in slim)
+RUN playwright install-deps chromium 2>/dev/null || true && playwright install chromium
 
 # Copy source
 COPY . .
