@@ -9,7 +9,6 @@ celery_app = Celery(
     backend=settings.REDIS_URL,
     include=[
         "app.tasks.crawl",
-        "app.tasks.generate",
         "app.tasks.monitor",
         "app.tasks.notify",
     ],
