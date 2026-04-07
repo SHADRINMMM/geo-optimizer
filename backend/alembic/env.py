@@ -10,16 +10,15 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from app.core.config import get_settings
-from app.core.database import Base
+from app.core.database import Base, _build_db_url
 import app.models  # noqa: F401 - import all models
 
 settings = get_settings()
 
+_clean_url, _connect_args = _build_db_url(settings.DATABASE_URL)
+
 config = context.config
-config.set_main_option(
-    "sqlalchemy.url",
-    settings.DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
-)
+config.set_main_option("sqlalchemy.url", _clean_url)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
@@ -50,6 +49,7 @@ async def run_async_migrations() -> None:
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        connect_args=_connect_args,
     )
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
