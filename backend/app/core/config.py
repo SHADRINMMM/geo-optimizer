@@ -25,6 +25,18 @@ class Settings(BaseSettings):
     LLM_MODEL: str = "gemini-2.0-flash"
     AWS_BEDROCK_API_KEY: str = ""
     AWS_BEDROCK_REGION: str = "us-east-1"
+    CLAUDE_MODEL: str = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+    OPENAI_API_KEY: str = ""
+    YANDEX_API_KEY: str = ""
+    YANDEX_FOLDER_ID: str = ""
+
+    # Monitoring
+    # Comma-separated list of engines to use: gemini,chatgpt,yandex,google_ai,claude
+    MONITOR_ENGINES: str = "gemini,google_ai,claude"
+    # How many expanded queries to generate per target query (0 = disabled)
+    MONITOR_QUERY_EXPANSION: int = 3
+    # Max queries per site per monitoring run
+    MONITOR_MAX_QUERIES: int = 10
 
     # Auth
     PROPELAUTH_AUTH_URL: str

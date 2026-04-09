@@ -34,7 +34,7 @@ def _ask_claude_sync(prompt: str, max_tokens: int = 2000) -> str:
         "messages": [{"role": "user", "content": prompt}],
     })
     response = client.invoke_model(
-        modelId="anthropic.claude-3-5-haiku-20241022-v1:0",
+        modelId=settings.CLAUDE_MODEL,
         body=body,
     )
     result = json.loads(response["body"].read())

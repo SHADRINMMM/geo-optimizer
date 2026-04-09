@@ -49,6 +49,12 @@ class SiteProfile(Base, TimestampMixin):
     # ["барбершоп чертаново", "лучший барбершоп москва"]
     target_queries: Mapped[list | None] = mapped_column(JSON, nullable=True)
 
+    # AI-expanded query variants (generated from target_queries)
+    expanded_queries: Mapped[list | None] = mapped_column(JSON, nullable=True)
+
+    # Monitoring frequency: "daily" | "weekly" | "monthly" (default weekly)
+    monitoring_frequency: Mapped[str] = mapped_column(String, default="weekly", nullable=False)
+
     # Unique features/amenities ["Парковка", "Wi-Fi", "Детская комната"]
     unique_features: Mapped[list | None] = mapped_column(JSON, nullable=True)
 
