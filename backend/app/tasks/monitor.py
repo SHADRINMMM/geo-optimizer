@@ -2,7 +2,10 @@
 Weekly monitoring task: check AI mentions for all active sites.
 """
 import asyncio
+import logging
 from app.worker import celery_app
+
+logger = logging.getLogger(__name__)
 
 
 @celery_app.task(name="app.tasks.monitor.run_all_monitors")
@@ -86,6 +89,7 @@ async def _check_site(site_id: str):
                     results.append(result)
                 except Exception as e:
                     job.status = "error"
+                    logger.error(f"Monitor check failed site={site_id} query={query!r} engine={engine}: {e}")
 
         await db.commit()
         return {"checked": len(results), "site_id": site_id}

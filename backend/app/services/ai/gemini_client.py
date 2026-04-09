@@ -72,7 +72,9 @@ async def build_business_profile(url: str, crawl_data: dict, reviews: list) -> d
         reviews=reviews_text[:2000],
     )
 
-    response = _model.generate_content(prompt)
+    import asyncio
+    loop = asyncio.get_running_loop()
+    response = await loop.run_in_executor(None, _model.generate_content, prompt)
     profile = _parse_json(response.text)
 
     # Enrich with crawl data that wasn't parsed
@@ -99,5 +101,7 @@ async def generate_faq(business_name: str, business_type: str, description: str,
         description=description,
         language=language,
     )
-    response = _model.generate_content(prompt)
+    import asyncio
+    loop = asyncio.get_running_loop()
+    response = await loop.run_in_executor(None, _model.generate_content, prompt)
     return _parse_json(response.text)

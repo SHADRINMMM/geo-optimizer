@@ -22,7 +22,7 @@ async def ask_claude(prompt: str, max_tokens: int = 2000) -> str:
     Note: boto3 is synchronous — run in executor for async contexts.
     """
     import asyncio
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
     return await loop.run_in_executor(None, _ask_claude_sync, prompt, max_tokens)
 
 
@@ -57,9 +57,9 @@ async def check_mention_claude(query: str, business_name: str, products: list) -
         query=query,
         business_name=business_name,
         products=", ".join(products[:10]) if products else "не указаны",
-        ai_response=user_response[:2000],
+        ai_response=user_response,
     )
-    analysis_raw = await ask_claude(analysis_prompt, max_tokens=500)
+    analysis_raw = await ask_claude(analysis_prompt, max_tokens=800)
 
     try:
         import re

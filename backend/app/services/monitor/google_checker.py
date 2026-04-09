@@ -96,18 +96,13 @@ async def _analyze_with_gemini(
     ai_response: str,
 ) -> dict:
     """Use Gemini to analyze Google results for business mentions."""
-    import google.generativeai as genai
-    from app.core.config import get_settings
-
-    settings = get_settings()
-    genai.configure(api_key=settings.GOOGLE_API_KEY)
-    model = genai.GenerativeModel(settings.LLM_MODEL)
+    from app.services.ai.gemini_client import _model as model
 
     prompt = MONITOR_ANALYSIS_PROMPT.format(
         query=query,
         business_name=business_name,
         products=", ".join(products[:10]) if products else "не указаны",
-        ai_response=ai_response[:2000],
+        ai_response=ai_response,
     )
 
     try:
